@@ -1,2 +1,2 @@
-# Calculateur-Int-r-ts-Compos-s
+# Calculateur-Intérêts-Composés
 Calculateur épargne ultra simplifié
