@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulateur d'Épargne</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    label, input {
+      display: block;
+      margin: 10px 0;
+    }
+    #resultats {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulateur d'Épargne avec Intérêts Composés</h1>
+  <label>Capital initial (€) :
+    <input type="number" id="capital_initial" value="0" />
+  </label>
+  <label>Taux de rendement annuel (%) :
+    <input type="number" id="taux" value="6" step="0.01" />
+  </label>
+  <label>Durée (années) :
+    <input type="number" id="duree" value="40" />
+  </label>
+  <label>Versement mensuel (€) :
+    <input type="number" id="versement_mensuel" value="500" />
+  </label>
+  <button onclick="calculer()">Calculer</button>
+
+  <div id="resultats"></div>
+  <canvas id="graphique" width="800" height="400"></canvas>
+
+  <script>
+    function calculer() {
+      const capitalInitial = parseFloat(document.getElementById('capital_initial').value);
+      const taux = parseFloat(document.getElementById('taux').value) / 100;
+      const duree = parseInt(document.getElementById('duree').value);
+      const versementsMensuels = parseFloat(document.getElementById('versement_mensuel').value);
+      const versementsAnnuels = versementsMensuels * 12;
+
+      const capitalFinal = versementsAnnuels * (((1 + taux) ** duree - 1) / taux) * (1 + taux) + capitalInitial * (1 + taux) ** duree;
+      const totalVersements = versementsAnnuels * duree;
+      const gains = capitalFinal - totalVersements - capitalInitial;
+
+      document.getElementById('resultats').innerHTML = `
+        <h3>Résultats :</h3>
+        <p><strong>Capital final :</strong> ${capitalFinal.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</p>
+        <p><strong>Total des versements :</strong> ${totalVersements.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</p>
+        <p><strong>Gains grâce aux intérêts composés :</strong> ${gains.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</p>
+      `;
+
+      const annees = Array.from({ length: duree + 1 }, (_, i) => i);
+      const capitalSansInterets = annees.map(annee => capitalInitial + versementsAnnuels * annee);
+      const capitalAvecInterets = annees.map(annee =>
+        versementsAnnuels * (((1 + taux) ** annee - 1) / taux) * (1 + taux) + capitalInitial * (1 + taux) ** annee
+      );
+
+      // Graphique
+      if (window.chart) window.chart.destroy();
+      const ctx = document.getElementById('graphique').getContext('2d');
+      window.chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: annees,
+          datasets: [
+            {
+              label: 'Sans intérêts composés',
+              data: capitalSansInterets,
+              borderColor: 'blue',
+              fill: false
+            },
+            {
+              label: 'Avec intérêts composés',
+              data: capitalAvecInterets,
+              borderColor: 'green',
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Évolution du capital avec et sans intérêts composés'
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Années'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Capital (€)'
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
