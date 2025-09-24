@@ -4,22 +4,49 @@
   <meta charset="UTF-8">
   <title>Simulateur d'Épargne</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
+<style>
+    body{
+      font-family: sans-serif;
+      margin: 0;
+      padding: 1rem;
     }
-    label, input {
-      display: block;
-      margin: 10px 0;
+
+    .container{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      height: 100vh;
+      box-sizing: border-box;
     }
-    #resultats {
-      margin-top: 20px;
+
+    .form-panel{
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .chart-panel{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas{
+      max-width: 100%;
+      max-height: 80%;
+    }
+    .main-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 16px 0;
+      color: #111827;
     }
   </style>
 </head>
 <body>
-  <h1>Simulateur d'Épargne avec Intérêts Composés</h1>
+  <h1 class="main-title">Simulateur d'Épargne avec Intérêts Composés</h1>
   <label>Capital initial (€) :
     <input type="number" id="capital_initial" value="0" />
   </label>
