@@ -1,3 +1,4 @@
 # Calculateur-Intérêts-Composés
-Calculateur épargne ultra simplifié
-Je vous conseille d'utiliser la version HTML, elle est plus intéressante.
+Petit projet pour montrer mes capacités en logique mathématiques en dev python et html  
+Calculateur épargne simplifié..  
+Je vous conseille d'utiliser la version HTML.
