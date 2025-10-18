@@ -18,7 +18,7 @@ L’utilisateur peut saisir :
 Le programme calcule le capital final selon la formule :
 
 \[
-C_f = V_a \times \frac{(1 + r)^n - 1}{r} \times (1 + r) + C_i \times (1 + r)^n
+Cf = Va * (((1 + r)**n - 1) / r) * (1 + r) + Ci * (1 + r)**n
 \]
 
 où :
